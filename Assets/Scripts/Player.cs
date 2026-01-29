@@ -14,10 +14,13 @@ public class Player : MonoBehaviour
     public float groundRadius = 0.1f;
     public LayerMask groundLayer;
 
+    private Animator _animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb2D = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -35,6 +38,10 @@ public class Player : MonoBehaviour
         {
             _rb2D.linearVelocity = new Vector2(_rb2D.linearVelocity.x, jumpForce);
         }
+
+        _animator.SetFloat("Speed", Mathf.Abs(move));
+        _animator.SetFloat("VerticalVelocity", _rb2D.linearVelocity.y);
+        _animator.SetBool("IsGrounded", _isGrounded);
     }
 
     private void FixedUpdate()
